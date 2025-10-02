@@ -83,26 +83,62 @@ func TestGetGradeF(t *testing.T) {
 }
 
 func TestAssignmentString(t *testing.T){
-	expectedValue := "assignment"
+	expected_value := "assignment"
 	actual_value := Assignment.String()
-	if expectedValue != actual_value{
-		t.Errorf("Expected Assignment String to return '%s', got '%s' instead", expectedValue, actual_value)
+	if expected_value != actual_value{
+		t.Errorf("Expected Assignment String to return '%s', got '%s' instead", expected_value, actual_value)
 	}
 }
 
 //Technically the two tests below are not required for the 100% coverage, but I included them to have more thorough testing
 func TestExamString(t *testing.T){
-	expectedValue := "exam"
+	expected_value := "exam"
 	actual_value := Exam.String()
-	if expectedValue != actual_value{
-		t.Errorf("Expected Exam String to return '%s', got '%s' instead", expectedValue, actual_value)
+	if expected_value != actual_value{
+		t.Errorf("Expected Exam String to return '%s', got '%s' instead", expected_value, actual_value)
 	}
 }
 
 func TestEssayString(t *testing.T){
-	expectedValue := "essay"
+	expected_value := "essay"
 	actual_value := Essay.String()
-	if expectedValue != actual_value{
-		t.Errorf("Expected Essay String to return '%s', got '%s' instead", expectedValue, actual_value)
+	if expected_value != actual_value{
+		t.Errorf("Expected Essay String to return '%s', got '%s' instead", expected_value, actual_value)
+	}
+}
+
+func TestPass(t *testing.T){
+	expected_value := "Pass"
+	GradeCalculator :=NewGradeCalculator()
+	GradeCalculator.AddGrade("assignment", 70, Assignment)
+	GradeCalculator.AddGrade("exam",70,Exam)
+	GradeCalculator.AddGrade("essay",70, Essay)
+	_ = GradeCalculator.GetFinalGrade()
+	actual_value := GradeCalculator.isPassing
+	if expected_value != actual_value{
+		t.Errorf("Expected '%s' at 70, got '%s' instead", expected_value, actual_value)
+	}
+}
+
+func TestFail(t *testing.T){
+	expected_value := "Fail"
+	GradeCalculator :=NewGradeCalculator()
+	GradeCalculator.AddGrade("assignment", 60, Assignment)
+	GradeCalculator.AddGrade("exam",40,Exam)
+	GradeCalculator.AddGrade("essay",30, Essay)
+	_ = GradeCalculator.GetFinalGrade()
+	actual_value := GradeCalculator.isPassing
+	if expected_value != actual_value{
+		t.Errorf("Expected '%s' below 70, got '%s' instead", expected_value, actual_value)
+	}
+}
+
+func TestEmpty(t *testing.T){
+	GradeCalculator := NewGradeCalculator()
+	expected_value := "Fail"
+	_ = GradeCalculator.GetFinalGrade()
+	actual_value := GradeCalculator.isPassing
+	if expected_value != actual_value{
+		t.Errorf("Expected '%s' when empty, got '%s' instead", expected_value, actual_value)
 	}
 }
