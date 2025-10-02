@@ -34,6 +34,38 @@ func TestGetGradeB(t *testing.T) {
 	}
 }
 
+func TestGetGradeC(t *testing.T) {
+	expected_value := "C"
+
+	gradeCalculator := NewGradeCalculator()
+
+	gradeCalculator.AddGrade("open source assignment", 79, Assignment)
+	gradeCalculator.AddGrade("exam 1", 60, Exam)
+	gradeCalculator.AddGrade("essay on ai ethics", 75, Essay)
+
+	actual_value := gradeCalculator.GetFinalGrade()
+
+	if expected_value != actual_value {
+		t.Errorf("Expected GetGrade to return '%s'; got '%s' instead", expected_value, actual_value)
+	}
+}
+
+func TestGetGradeD(t *testing.T) {
+	expected_value := "D"
+
+	gradeCalculator := NewGradeCalculator()
+
+	gradeCalculator.AddGrade("open source assignment", 60, Assignment)
+	gradeCalculator.AddGrade("exam 1", 65, Exam)
+	gradeCalculator.AddGrade("essay on ai ethics", 68, Essay)
+
+	actual_value := gradeCalculator.GetFinalGrade()
+
+	if expected_value != actual_value {
+		t.Errorf("Expected GetGrade to return '%s'; got '%s' instead", expected_value, actual_value)
+	}
+}
+
 func TestGetGradeF(t *testing.T) {
 	expected_value := "F"
 
@@ -47,5 +79,30 @@ func TestGetGradeF(t *testing.T) {
 
 	if expected_value != actual_value {
 		t.Errorf("Expected GetGrade to return '%s'; got '%s' instead", expected_value, actual_value)
+	}
+}
+
+func TestAssignmentString(t *testing.T){
+	expectedValue := "assignment"
+	actual_value := Assignment.String()
+	if expectedValue != actual_value{
+		t.Errorf("Expected Assignment String to return '%s', got '%s' instead", expectedValue, actual_value)
+	}
+}
+
+//Technically the two tests below are not required for the 100% coverage, but I included them to have more thorough testing
+func TestExamString(t *testing.T){
+	expectedValue := "exam"
+	actual_value := Exam.String()
+	if expectedValue != actual_value{
+		t.Errorf("Expected Exam String to return '%s', got '%s' instead", expectedValue, actual_value)
+	}
+}
+
+func TestEssayString(t *testing.T){
+	expectedValue := "essay"
+	actual_value := Essay.String()
+	if expectedValue != actual_value{
+		t.Errorf("Expected Essay String to return '%s', got '%s' instead", expectedValue, actual_value)
 	}
 }
